@@ -1,0 +1,61 @@
+
+# Supply Chain Risk Prediction System Configuration
+
+# Data Generation Parameters
+data:
+  n_companies: 26
+  n_days: 365
+  n_satellite_images: 100
+  sequence_length: 30
+  
+# Model Hyperparameters
+models:
+  computer_vision:
+    input_size: [64, 64, 3]
+    conv_channels: [32, 64, 128]
+    fc_size: 256
+    dropout: 0.3
+    learning_rate: 0.001
+    epochs: 20
+    
+  time_series:
+    input_size: 4
+    hidden_size: 64
+    num_layers: 2
+    dropout: 0.2
+    learning_rate: 0.001
+    epochs: 30
+    
+  graph_neural_network:
+    hidden_dim: 64
+    num_heads: 4
+    dropout: 0.3
+    learning_rate: 0.01
+    weight_decay: 5e-4
+    epochs: 100
+    
+# Ensemble Configuration
+ensemble:
+  weights:
+    gnn: 0.4
+    time_series: 0.4
+    computer_vision: 0.2
+    
+# Training Configuration
+training:
+  train_split: 0.8
+  random_seed: 42
+  
+# Visualization Settings
+visualization:
+  figure_size: [15, 10]
+  network_layout: "spring"
+  color_map: "Reds"
+  high_risk_threshold: 0.7
+  
+# Risk Analysis
+risk_analysis:
+  propagation_weights:
+    downstream_impact: 0.6
+    upstream_risk: 0.4
+  high_propagation_threshold: 0.5
