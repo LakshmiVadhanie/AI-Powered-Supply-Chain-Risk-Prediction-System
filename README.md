@@ -111,26 +111,13 @@ The system achieves:
 - **Ensemble Model**: Improved robustness through model combination
 
 
-##  Project Structure
+## Configuration
 
-```
-supply-chain-risk-prediction/
-├── data/                 # Data generation and processing
-├── models/              # AI model implementations
-├── utils/               # Visualization and analysis utilities  
-├── scripts/             # Training and prediction scripts
-├── notebooks/           # Jupyter notebooks for exploration
-├── tests/               # Unit tests
-└── docs/                # Documentation
-```
-
-## 🔧 Configuration
-
-Modify `config/config.yaml` to customize:
-- Model hyperparameters
-- Training settings
-- Data generation parameters
-- Visualization options
+Modify config/config.yaml to customize:
+Model hyperparameters
+Training settings
+Data generation parameters
+Visualization options
 
 ##  Usage Examples
 
