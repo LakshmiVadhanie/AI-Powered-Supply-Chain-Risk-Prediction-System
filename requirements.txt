@@ -1,53 +1,16 @@
-# Deep Learning
-torch>=1.9.0
-torchvision>=0.10.0
-torch-geometric>=2.0.0
-
-# Data Processing
-pandas>=1.3.0
-numpy>=1.21.0
-scikit-learn>=1.0.0
-
-# Graph Processing
-networkx>=2.6
-torch-scatter
-torch-sparse
-torch-cluster
-torch-spline-conv
-
-# Visualization
-matplotlib>=3.4.0
-seaborn>=0.11.0
-plotly>=5.0.0
-
-# Computer Vision
-opencv-python-headless>=4.5.0
-Pillow>=8.3.0
-
-# Web Scraping (for future features)
-requests>=2.26.0
-beautifulsoup4>=4.10.0
-
-# Natural Language Processing (for news analysis)
-transformers>=4.11.0
-datasets>=1.12.0
-
-# Configuration
-PyYAML>=5.4.0
-
-# Development and Testing
-pytest>=6.2.0
-black>=21.0.0
-flake8>=3.9.0
-mypy>=0.910
-
-# Jupyter Notebooks
-jupyter>=1.0.0
-notebook>=6.4.0
-ipywidgets>=7.6.0
-
-# Progress bars
-tqdm>=4.62.0
-
-# Logging
-loguru>=0.5.3
+torch
+torchvision
+torch-geometric
+networkx
+matplotlib
+seaborn
+plotly
+pandas
+numpy
+scikit-learn
+transformers
+datasets
+opencv-python-headless
+pillow
+requests
+beautifulsoup4
