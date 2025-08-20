@@ -1,0 +1,81 @@
+from models.ensemble import create_ensemble_predictions
+from utils.visualization import visualize_results, visualize_supply_network
+from utils.risk_analysis import analyze_risk_propagation
+from scripts.train_models import train_all_models
+
+def predict_supply_chain_risk():
+    # Train models if not already done
+    models_data = train_all_models()
+    
+    # Extract models and data
+    cv_model = models_data['cv_model']
+    ts_model = models_data['ts_model']
+    gnn_model = models_data['gnn_model']
+    graph_data = models_data['graph_data']
+    X_seq = models_data['X_seq']
+    company_df = models_data['company_df']
+    relationships_df = models_data['relationships_df']
+    satellite_images = models_data['satellite_images']
+    
+    # Generate ensemble predictions
+    print("\nGenerating ensemble predictions...")
+    ensemble_preds, gnn_preds, ts_preds, cv_preds = create_ensemble_predictions(
+        cv_model, ts_model, gnn_model, graph_data, X_seq, satellite_images, company_df)
+    
+    # Visualize results
+    print("\nVisualizing results...")
+    results_df = visualize_results(company_df, ensemble_preds, gnn_preds, ts_preds, cv_preds)
+    
+    # Visualize supply network
+    print("\nVisualizing supply network...")
+    supply_network = visualize_supply_network(company_df, relationships_df, results_df)
+    
+    # Analyze risk propagation
+    print("\nAnalyzing risk propagation...")
+    results_df = analyze_risk_propagation(supply_network, results_df)
+    
+    # Print summary statistics
+    print("SUPPLY CHAIN RISK PREDICTION SYSTEM - SUMMARY")
+   
+    
+    print(f"\nOVERALL STATISTICS:")
+    print(f"- Average Risk Score: {results_df['ensemble_risk'].mean():.3f}")
+    print(f"- High Risk Companies (>0.7): {len(results_df[results_df['ensemble_risk'] > 0.7])}")
+    print(f"- Critical Propagation Risks: {len(results_df[results_df['propagation_risk'] > 0.5])}")
+    
+    print(f"\nREGIONAL RISK ANALYSIS:")
+    regional_risks = results_df.groupby('region')['ensemble_risk'].mean().sort_values(ascending=False)
+    for region, risk in regional_risks.items():
+        print(f"- {region}: {risk:.3f}")
+    
+    print(f"\nINDUSTRY RISK ANALYSIS:")
+    industry_risks = results_df.groupby('industry')['ensemble_risk'].mean().sort_values(ascending=False)
+    for industry, risk in industry_risks.items():
+        print(f"- {industry}: {risk:.3f}")
+    
+    print(f"\nTOP 5 COMPANIES AT RISK:")
+    top_5_risk = results_df.nlargest(5, 'ensemble_risk')
+    for _, company in top_5_risk.iterrows():
+        print(f"- {company['company_name']} ({company['region']}): {company['ensemble_risk']:.3f}")
+    
+    print(f"\nTOP 5 PROPAGATION RISKS:")
+    top_5_propagation = results_df.nlargest(5, 'propagation_risk')
+    for _, company in top_5_propagation.iterrows():
+        print(f"- {company['company_name']}: {company['propagation_risk']:.3f}")
+    
+    print(f"\nMODEL PERFORMANCE:")
+    print(f"- Computer Vision Model: Trained on {len(satellite_images)} satellite images")
+    print(f"- Time Series Model: Processed {len(models_data['time_series_df'])} time series points")
+    print(f"- Graph Neural Network: Analyzed {len(company_df)} companies, {len(relationships_df)} relationships")
+    print(f"- Ensemble Model: Combined all three approaches")
+    
+    print(f"\nSYSTEM CAPABILITIES:")
+    print(f"- Multi-modal risk assessment (Vision + Time Series + Graph)")
+    print(f"- Real-time supply chain monitoring")
+    print(f"- Risk propagation analysis")
+    print(f"- Ensemble prediction for improved accuracy")
+    
+    return results_df
+
+if __name__ == "__main__":
+    results = predict_supply_chain_risk()
