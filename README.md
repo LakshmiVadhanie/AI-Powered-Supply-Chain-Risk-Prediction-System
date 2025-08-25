@@ -15,19 +15,15 @@ An AI-powered supply chain risk prediction system that combines Computer Vision,
 ##  Architecture
 
 ```
-┌─────────────────┐    ┌─────────────────┐    ┌─────────────────┐
-│   Satellite     │    │   Time Series   │    │   Supply Chain  │
-│   Images        │    │   Data          │    │   Network       │
-│                 │    │                 │    │                 │
-│   CNN Model     │    │   LSTM Model    │    │   GNN Model     │
-└─────────┬───────┘    └─────────┬───────┘    └─────────┬───────┘
-          │                      │                      │
-          └──────────────────────┼──────────────────────┘
-                                 │
-                         ┌───────▼───────┐
-                         │   Ensemble    │
-                         │   Predictor   │
-                         └───────────────┘
+|satellite images (CNN MODEL) | Time Series Data (LSTM Model) | Supply chain network (GNN Model)
+
+          |                                     |                                   |                                         
+          |_____________________________________|___________________________________|
+                                                │
+                                        ┌───────▼───────┐
+                                        │   Ensemble    │
+                                        │   Predictor   │
+                                        └───────────────┘
 ```
 
 ## Installation
